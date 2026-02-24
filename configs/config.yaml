@@ -1,0 +1,23 @@
+project:
+  name: "PHIL-TEXT"
+  version: "0.1.0"
+
+data:
+  raw_path: "data/raw"
+  processed_path: "data/processed"
+  test_size: 0.2
+  random_state: 42
+  target_column: "target"
+
+model:
+  type: "random_forest"
+  save_path: "models/saved"
+
+training:
+  epochs: 100
+  batch_size: 32
+  learning_rate: 0.001
+
+api:
+  host: "0.0.0.0"
+  port: 8000
