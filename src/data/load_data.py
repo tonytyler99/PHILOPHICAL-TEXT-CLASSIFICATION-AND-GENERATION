@@ -62,8 +62,7 @@ def load_json(filepath: str) -> list:
 
 def load_corpus(data_dir: str = "data/raw") -> pd.DataFrame:
     """
-    Tum felsefe metinlerini yukle.
-    Beklenen yapi: data/raw/filozof_adi/eser_adi.txt
+    All uploaded text files to df
     """
     records = []
     data_path = Path(data_dir)
