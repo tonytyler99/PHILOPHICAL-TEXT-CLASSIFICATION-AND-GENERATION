@@ -34,6 +34,27 @@ def cross_validate_model(model, X, y, cv=5):
     logger.info(f"CV F1: {scores.mean():.4f} (+/- {scores.std():.4f})")
     return {"cv_scores": scores.tolist(), "mean_f1": scores.mean(), "std_f1": scores.std()}
 
+def evaluate_transformer(model, tokenizer, texts, labels, id2label=None,
+                          batch_size=32, max_length=512):
+    import torch
+    device = next(model.parameters()).device
+    texts = list(texts)
+    all_preds = []
+    model.eval()
+    with torch.no_grad():
+        for i in range(0, len(texts), batch_size):
+            batch = texts[i:i + batch_size]
+            enc = tokenizer(batch, truncation=True, padding=True,
+                            max_length=max_length, return_tensors='pt')
+            enc = {k: v.to(device) for k, v in enc.items()}
+            outputs = model(**enc)
+            preds = outputs.logits.argmax(dim=-1).cpu().numpy()
+            all_preds.extend(preds.tolist())
+    all_preds = np.array(all_preds)
+    metrics = evaluate_classification(np.array(labels), all_preds, id2label)
+    metrics['predictions'] = all_preds.tolist()
+    return metrics
+
 def compare_models(results, save_path=None):
     df = pd.DataFrame([{"model": n, **{k: v for k, v in m.items() if isinstance(v, (int, float))}}
                         for n, m in results.items()])

@@ -6,7 +6,7 @@ import joblib, json
 from pathlib import Path
 from loguru import logger
 import numpy as np
-from sklearn.svm import SVC
+from sklearn.svm import SVC, LinearSVC
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
@@ -18,6 +18,7 @@ TRADITIONAL_MODELS = {
     "random_forest": lambda: RandomForestClassifier(n_estimators=200, max_depth=30, random_state=42, n_jobs=-1),
     "gradient_boosting": lambda: GradientBoostingClassifier(n_estimators=200, max_depth=5, random_state=42),
     "logistic_regression": lambda: LogisticRegression(max_iter=1000, C=1.0, random_state=42, n_jobs=-1),
+    "linearsvc": lambda: LinearSVC(C=1.0, class_weight="balanced", max_iter=2000, random_state=42),
 }
 
 
@@ -120,7 +121,7 @@ def save_model(model, filepath, metadata=None):
     Path(filepath).parent.mkdir(parents=True, exist_ok=True)
     joblib.dump(model, filepath)
     if metadata:
-        meta_path = filepath.replace(".pkl", "_meta.json")
+        meta_path = str(Path(filepath).with_suffix("")) + "_meta.json"
         with open(meta_path, "w") as f: json.dump(metadata, f, indent=2)
     logger.info(f"Model kaydedildi: {filepath}")
 

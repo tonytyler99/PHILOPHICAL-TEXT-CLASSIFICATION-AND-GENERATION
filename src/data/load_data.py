@@ -52,6 +52,8 @@ def load_csv(filepath: str, **kwargs) -> pd.DataFrame:
     logger.info(f"Uploaded: {df.shape[0]} Row, {df.shape[1]} columns")
     return df
 
+    
+
 
 def load_json(filepath: str) -> list:
     with open(filepath, "r", encoding="utf-8") as f:
