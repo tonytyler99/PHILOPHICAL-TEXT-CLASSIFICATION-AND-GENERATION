@@ -1,0 +1,13 @@
+{
+  "model": "LinearSVC_Optuna",
+  "best_params": {
+    "C": 2.5378155082656657,
+    "max_iter": 3832,
+    "loss": "squared_hinge"
+  },
+  "val_f1_weighted": 1.0,
+  "test_accuracy": 0.9984,
+  "test_f1_weighted": 0.9984,
+  "baseline_test_f1": 0.9968,
+  "n_trials": 50
+}

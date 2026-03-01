@@ -1,0 +1,14 @@
+{
+  "model_name": "distilbert-base-uncased",
+  "output_dir": "../models/saved/distilbert",
+  "epochs": 3,
+  "batch_size": 16,
+  "learning_rate": 3e-05,
+  "max_length": 256,
+  "num_labels": 10,
+  "best_val_accuracy": 0.9469,
+  "test_accuracy": 0.9388,
+  "test_f1_weighted": 0.9353,
+  "baseline_accuracy": 0.9984,
+  "baseline_f1": 0.9984
+}
